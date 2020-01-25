@@ -1,19 +1,19 @@
 import streamlit as st
 import pandas as pd
-import pickle
-from fbprophet import Prophet
-from fbprophet.diagnostics import cross_validation
-from datetime import datetime, timedelta
-import requests
-from datetime import date
-import pytz
-import urllib
-import urllib.parse
-import json
-import plotly.graph_objects as go
-from urllib.request import urlopen
-import numpy as np
-import pydeck as pdk
+# import pickle
+# from fbprophet import Prophet
+# from fbprophet.diagnostics import cross_validation
+# from datetime import datetime, timedelta
+# import requests
+# from datetime import date
+# import pytz
+# import urllib
+# import urllib.parse
+# import json
+# import plotly.graph_objects as go
+# from urllib.request import urlopen
+# import numpy as np
+# import pydeck as pdk
 
 
 def main():
