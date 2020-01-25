@@ -100,7 +100,7 @@ def main():
 
     concat_data.to_csv('data.csv', index=False)
 
-    upload(dbx, 'data.csv', '', '', 'newdata.csv')
+    upload(dbx, 'data.csv', '', '', 'data.csv', overwrite=True)
 
 
 if __name__ == "__main__":
