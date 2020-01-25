@@ -24,7 +24,6 @@ import sys
 import time
 import unicodedata
 import dropbox
-from dotenv import load_dotenv
 
 
 def upload(dbx, fullname, folder, subfolder, name, overwrite=False):
