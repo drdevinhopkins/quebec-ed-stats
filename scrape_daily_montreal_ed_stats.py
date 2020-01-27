@@ -106,6 +106,28 @@ def main():
     upload(dbx, 'dailyMontrealEdStats.csv', '', '',
            'dailyMontrealEdStats.csv', overwrite=True)
 
+    old_jgh_data_url = 'https://www.dropbox.com/s/keafvwlkboedkdm/jghDailyVisits.csv?dl=1'
+    old_jgh_data = pd.read_csv(old_jgh_data_url)
+    old_jgh_data['ds'] = pd.to_datetime(old_jgh_data['ds'])
+    print('old jgh data: ', len(old_jgh_data),
+          ' rows, ending ', old_jgh_data.ds.max())
+
+    new_jgh_data = df[df.Installation == "L'Hôpital général juif Sir Mortimer B. Davis"][[
+        'Nombre inscriptions', 'date']]
+
+    new_jgh_data = new_jgh_data.rename(
+        columns={'Nombre inscriptions': "y", "date": "ds"})
+
+    concat_jgh_data = old_jgh_data.append(
+        new_jgh_data, ignore_index=True, sort=True)
+
+    print('concat jgh data: ', len(concat_jgh_data))
+
+    concat_jgh_data.to_csv('jghDailyVisits.csv', index=False)
+
+    upload(dbx, 'jghDailyVisits.csv', '', '',
+           'jghDailyVisits.csv', overwrite=True)
+
 
 if __name__ == "__main__":
     main()
