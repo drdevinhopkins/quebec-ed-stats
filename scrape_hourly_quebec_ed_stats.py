@@ -44,7 +44,7 @@ def main():
     dbx.users_get_current_account()
     print('connected to dropbox')
 
-    data_url = 'https://www.dropbox.com/s/folba7dxjgo5pwx/data.csv?dl=1'
+    data_url = 'https://www.dropbox.com/s/7idv6buofuqru5z/hourlyQuebecEDStats.csv?dl=1'
     old_data = pd.read_csv(data_url)
     old_data['Mise_a_jour'] = pd.to_datetime(old_data['Mise_a_jour'])
     old_data["Heure_de_l'extraction_(image)"] = pd.to_datetime(
@@ -72,9 +72,10 @@ def main():
     concat_data = concat_data.drop_duplicates().reset_index(drop=True)
     print('concat data: ', len(concat_data))
 
-    concat_data.to_csv('data.csv', index=False)
+    concat_data.to_csv('hourlyQuebecEDStats.csv', index=False)
 
-    upload(dbx, 'data.csv', '', '', 'data.csv', overwrite=True)
+    upload(dbx, 'hourlyQuebecEDStats.csv', '', '',
+           'hourlyQuebecEDStats.csv', overwrite=True)
 
 
 if __name__ == "__main__":
