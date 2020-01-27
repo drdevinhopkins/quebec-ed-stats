@@ -105,3 +105,7 @@ def main():
 
     upload(dbx, 'dailyMontrealEdStats.csv', '', '',
            'dailyMontrealEdStats.csv', overwrite=True)
+
+
+if __name__ == "__main__":
+    main()
