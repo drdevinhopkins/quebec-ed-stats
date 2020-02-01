@@ -37,8 +37,8 @@ def main():
     df.ds = pd.to_datetime(df.ds)
     print('jgh daily visits loaded')
 
-    stat_days_df = pd.read_excel(
-        'https://www.dropbox.com/s/yghzalce8gy7x92/jghStatDays.xlsx?dl=1')
+    stat_days_df = pd.read_csv(
+        'https://www.dropbox.com/s/hj3byufwtypi8d3/statdays.csv?dl=1')
 
     ramq_stat_days = stat_days_df['RAMQ']
     ramq_stat_days = ramq_stat_days.dropna()

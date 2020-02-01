@@ -5,4 +5,3 @@ plotly==4.4.1
 dropbox==9.4.0
 beautifulsoup4==4.8.2
 wwo_hist==0.0.4
-xlrd==1.2.0
