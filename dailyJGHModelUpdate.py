@@ -21,9 +21,6 @@ import sys
 import time
 import unicodedata
 from datetime import *
-import pytz
-
-
 from wwo_hist import retrieve_hist_data
 import pytz
 
