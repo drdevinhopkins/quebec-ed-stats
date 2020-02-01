@@ -68,11 +68,9 @@ def main():
     hockey_df.dateTime = pd.to_datetime(hockey_df.dateTime)
 
     # Separate the games by Home or Away
-    home_hockey_df = hockey_df[hockey_df['homeTeam'].isin(
-        ['Montréal Canadiens', 'MontrÃ©al Canadiens'])]
+    home_hockey_df = hockey_df[hockey_df['homeTeam'] == 'Montreal Canadiens']
 
-    away_hockey_df = hockey_df[hockey_df['awayTeam'].isin(
-        ['Montréal Canadiens', 'MontrÃ©al Canadiens'])]
+    away_hockey_df = hockey_df[hockey_df['awayTeam'] == "Montreal Canadiens"]
 
     # Format them as Prophet expects
     home_hockey = pd.DataFrame({
