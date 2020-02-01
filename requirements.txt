@@ -1,6 +1,6 @@
 streamlit==0.51.0
+fbprophet==0.5
 holidays==0.9.12
-git+git://github.com/facebook/prophet.git
 plotly==4.4.1
 dropbox==9.4.0
 beautifulsoup4==4.8.2
