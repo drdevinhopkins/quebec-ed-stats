@@ -77,6 +77,26 @@ def main():
     upload(dbx, 'hourlyQuebecEDStats.csv', '', '',
            'hourlyQuebecEDStats.csv', overwrite=True)
 
+    new_jgh_hourly = new_data[new_data.No_permis_installation == 12685608]
+    new_jgh_hourly = new_jgh_hourly[[
+        'Nombre_de_civieres_occupees', "Heure_de_l'extraction_(image)"]]
+    new_jgh_hourly = new_jgh_hourly.rename(
+        columns={'Nombre_de_civieres_occupees': 'y', "Heure_de_l'extraction_(image)": 'ds'})
+    new_jgh_hourly.ds = pd.to_datetime(new_jgh_hourly.ds)
+
+    jgh_occupancy = pd.read_csv(
+        'https://www.dropbox.com/s/fqsdx1ovqsljwqa/jghOccupancy.csv?dl=1')
+    jgh_occupancy.ds = pd.to_datetime(jgh_occupancy.ds)
+
+    jgh_occupancy = jgh_occupancy.append(
+        new_jgh_hourly, ignore_index=True, sort=False)
+    jgh_occupancy = jgh_occupancy.drop_duplicates()
+    jgh_occupancy = jgh_occupancy.dropna()
+    jgh_occupancy.to_csv('jghOccupancy.csv', index=False)
+
+    upload(dbx, 'jghOccupancy.csv', '', '',
+           'jghOccupancy.csv', overwrite=True)
+
 
 if __name__ == "__main__":
     main()
