@@ -65,6 +65,7 @@ def main():
 
     old_predictions = pd.read_csv(
         'https://www.dropbox.com/s/8v2tnadtjpd5hht/jghPredictions.csv?dl=1', index_col=0)
+    old_predictions.index = pd.to_datetime(old_predictions.index)
     old_predictions.columns = pd.to_datetime(old_predictions.columns)
 
     predictions = pd.concat([old_predictions, new_predictions])
