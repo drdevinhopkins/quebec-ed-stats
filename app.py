@@ -21,9 +21,14 @@ def main():
             daily_JGH_predictions_df.index)
         daily_JGH_predictions_df.columns = pd.to_datetime(
             daily_JGH_predictions_df.columns)
+        daily_JGH_predictions_df_archive = daily_JGH_predictions_df
         daily_JGH_predictions_df = daily_JGH_predictions_df.tail(1).T
         daily_JGH_predictions_df = daily_JGH_predictions_df.rename(
             columns={daily_JGH_predictions_df.columns[0]: "y"})
+        prediction_archive_dates = [date for date in list(
+            daily_JGH_predictions_df_archive) if date < datetime.now().date()]
+        prediction_archive_visits = [int(
+            daily_JGH_predictions_df_archive.loc[date][date]) for date in prediction_archive_dates]
 
         old_JGH_daily = pd.read_csv(
             'https://www.dropbox.com/s/keafvwlkboedkdm/jghDailyVisits.csv?dl=1')
@@ -31,11 +36,11 @@ def main():
         old_JGH_daily = old_JGH_daily.tail(14)
         old_JGH_daily = old_JGH_daily.set_index('ds')
 
-        return quebec_data, mtl_data, jgh_data, daily_JGH_predictions_df, old_JGH_daily
+        return quebec_data, mtl_data, jgh_data, daily_JGH_predictions_df, old_JGH_daily, prediction_archive_dates, prediction_archive_visits
 
     my_placeholder = st.empty()
     my_placeholder.text("Loading data...")
-    quebec_data, mtl_data, jgh_data, daily_JGH_predictions_df, old_JGH_daily = load_data()
+    quebec_data, mtl_data, jgh_data, daily_JGH_predictions_df, old_JGH_daily, prediction_archive_dates, prediction_archive_visits = load_data()
 
     my_placeholder.text(" ")
 
@@ -50,6 +55,8 @@ def main():
                              name='Predictions', showlegend=True))
     fig.add_trace(go.Scatter(x=old_JGH_daily.index, y=old_JGH_daily.y.to_list(), mode='lines+markers',
                              name='Daily Visits', showlegend=True))
+    fig.add_trace(go.Scatter(x=prediction_archive_dates, y=prediction_archive_visits, mode='lines+markers',
+                             name='Previous Predictions', showlegend=True))
     st.plotly_chart(fig)
 
     st.title('Quebec ED Data')
