@@ -53,6 +53,8 @@ def main():
 
     st.title('JGH Predictions')
 
+    # st.subheader('Daily Visits')
+
     today_string = datetime.now().date().strftime("%Y-%m-%d")
 
     fig = go.Figure()
@@ -81,26 +83,26 @@ def main():
                              name='Previous Predictions', showlegend=True))
     st.plotly_chart(fig)
 
-    st.write('Mean Absolute Percentage Error (MAPE): '+str(mape)+'%')
+    st.write('Mean Absolute Percentage Error (MAPE) since Feb 1, 2020: '+str(mape)+'%')
 
-    # st.title('Quebec ED Data')
+    # st.subheader('Stretcher Occupancy')
 
-    # st.subheader('Quebec')
-    # st.write(quebec_data)
+    hist_occupancy = pd.read_csv(
+        'https://www.dropbox.com/s/y194k24bl2uxa3g/JGHOccupancyLast72hrs.csv?dl=1')
+    hist_occupancy.ds = pd.to_datetime(hist_occupancy.ds)
 
-    # select_hospital = st.selectbox(
-    #     'Choose a hospital:',
-    #     quebec_data['Nom_installation'].unique())
+    pred_occupancy = pd.read_csv(
+        'https://www.dropbox.com/s/5p5ysjt1vkncnry/JGHOccupancyPredictions.csv?dl=1')
+    pred_occupancy.ds = pd.to_datetime(pred_occupancy.ds)
 
-    # st.write(quebec_data[quebec_data['Nom_installation'] == select_hospital])
-
-    # st.subheader('Montreal')
-    # st.write(mtl_data)
-
-    # st.subheader('JGH')
-    # st.write(jgh_data)
-
-    # st.line_chart(jgh_data)
+    fig2 = go.Figure()
+    fig2.update_layout(title_text="JGH Stretcher Occupancy",
+                       title_font_size=18)
+    fig2.add_trace(go.Scatter(x=pred_occupancy.ds.to_list(), y=pred_occupancy.yhat.to_list(), mode='lines+markers',
+                              name='Predictions', showlegend=True))
+    fig2.add_trace(go.Scatter(x=hist_occupancy.ds.to_list(), y=hist_occupancy.y.to_list(), mode='lines+markers',
+                              name='Historical', showlegend=True))
+    st.plotly_chart(fig2)
 
 
 if __name__ == "__main__":
