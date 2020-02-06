@@ -4,6 +4,7 @@ import plotly.graph_objects as go
 import plotly as py
 from datetime import *
 from streamlit import caching
+from weather import *
 
 
 def main():
@@ -103,6 +104,39 @@ def main():
     fig2.add_trace(go.Scatter(x=hist_occupancy.ds.to_list(), y=hist_occupancy.y.to_list(), mode='lines+markers',
                               name='Historical', showlegend=True))
     st.plotly_chart(fig2)
+
+    retrieve_future_data(api_key='3d51d04f983a478e90f164916191012',
+                         location_list=['Montreal'],
+                         frequency=24, num_of_days=14,
+                         location_label=False,
+                         export_csv=True,
+                         store_df=False)
+    weather_forecast = pd.read_csv('Montreal-daily.csv')
+    weather_forecast['ds'] = pd.to_datetime(weather_forecast['ds'])
+
+    fig3 = go.Figure()
+    fig3.update_layout(title_text="Temperature",
+                       title_font_size=18)
+    for weather_element in ['FeelsLikeC', 'maxtempC', 'mintempC']:
+        fig3.add_trace(go.Scatter(x=weather_forecast.ds.to_list(), y=weather_forecast[weather_element].to_list(), mode='lines+markers',
+                                  name=weather_element, showlegend=True))
+    st.plotly_chart(fig3)
+
+    fig4 = go.Figure()
+    fig4.update_layout(title_text="Precipitation",
+                       title_font_size=18)
+    for weather_element in ['totalSnow_cm', 'precipMM']:
+        fig4.add_trace(go.Scatter(x=weather_forecast.ds.to_list(), y=weather_forecast[weather_element].to_list(), mode='lines+markers',
+                                  name=weather_element, showlegend=True))
+    st.plotly_chart(fig4)
+
+    fig5 = go.Figure()
+    fig5.update_layout(title_text="Other Weather Elements",
+                       title_font_size=18)
+    for weather_element in ['sunHour', 'uvIndex', 'moon_illumination', 'WindGustKmph', 'windspeedKmph', 'visibility']:
+        fig5.add_trace(go.Scatter(x=weather_forecast.ds.to_list(), y=weather_forecast[weather_element].to_list(), mode='lines+markers',
+                                  name=weather_element, showlegend=True))
+    st.plotly_chart(fig5)
 
 
 if __name__ == "__main__":
