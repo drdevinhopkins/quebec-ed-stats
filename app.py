@@ -58,8 +58,11 @@ def main():
     today = datetime.now().date()
     today_string = datetime.now().date().strftime("%Y-%m-%d")
 
-    st.subheader(today_string+" - Today's Prediction: " +
-                 str(int(daily_JGH_predictions_df_archive.loc[today_string][today_string])))
+    last_prediction = daily_JGH_predictions_df_archive.index.max()
+    st.subheader("Today's Prediction: " +
+                 str(int(daily_JGH_predictions_df_archive.loc[last_prediction][today_string])))
+    st.write('Last updated on: '+str(last_prediction.date()) +
+             ' at 11:00AM based on the current weather forecast')
 
     fig = go.Figure()
     fig.update_layout(title_text="JGH Visits",
