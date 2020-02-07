@@ -55,8 +55,11 @@ def main():
     st.title('JGH Predictions')
 
     # st.subheader('Daily Visits')
-
+    today = datetime.now().date()
     today_string = datetime.now().date().strftime("%Y-%m-%d")
+
+    st.subheader(today_string+" - Today's Prediction: " +
+                 str(int(daily_JGH_predictions_df_archive.loc[today_string][today_string])))
 
     fig = go.Figure()
     fig.update_layout(title_text="JGH Visits",
