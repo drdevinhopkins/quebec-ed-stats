@@ -53,7 +53,8 @@ def main():
                   ).date().strftime("%d-%b-%Y").upper()
     end_date = (datetime.now(pytz.utc)).astimezone(
         pytz.timezone('US/Eastern')).date().strftime("%d-%b-%Y").upper()
-    api_key = '3d51d04f983a478e90f164916191012'
+    weather_api_key = os.environ['WEATHER_API']
+    api_key = weather_api_key
     location_list = ['Montreal']
     retrieve_hist_data(api_key,
                        location_list,

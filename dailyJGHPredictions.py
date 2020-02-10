@@ -27,12 +27,13 @@ import pytz
 
 def main():
 
+    weather_api_key = os.environ['WEATHER_API']
     dropbox_api_key = os.environ['DROPBOX_ED_API']
     dbx = dropbox.Dropbox(dropbox_api_key)
     dbx.users_get_current_account()
     print('connected to dropbox')
 
-    retrieve_future_data(api_key='3d51d04f983a478e90f164916191012',
+    retrieve_future_data(api_key=weather_api_key,
                          location_list=['Montreal'],
                          frequency=24, num_of_days=14,
                          location_label=False,

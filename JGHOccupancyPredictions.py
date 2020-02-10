@@ -26,7 +26,7 @@ import pytz
 
 
 def main():
-
+    weather_api_key = os.environ['WEATHER_API']
     dropbox_api_key = os.environ['DROPBOX_ED_API']
     dbx = dropbox.Dropbox(dropbox_api_key)
     dbx.users_get_current_account()
@@ -36,7 +36,7 @@ def main():
         'https://www.dropbox.com/s/fqsdx1ovqsljwqa/jghOccupancy.csv?dl=1')
     hist_data.ds = pd.to_datetime(hist_data.ds)
 
-    retrieve_future_data(api_key='3d51d04f983a478e90f164916191012',
+    retrieve_future_data(api_key=weather_api_key,
                          location_list=['Montreal'],
                          frequency=1, num_of_days=5,
                          location_label=False,

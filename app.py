@@ -5,6 +5,7 @@ import plotly as py
 from datetime import *
 from streamlit import caching
 from weather import *
+import os
 
 
 def main():
@@ -111,7 +112,9 @@ def main():
                               name='Historical', showlegend=True))
     st.plotly_chart(fig2)
 
-    retrieve_future_data(api_key='3d51d04f983a478e90f164916191012',
+    weather_api_key = os.environ['WEATHER_API']
+
+    retrieve_future_data(api_key=weather_api_key,
                          location_list=['Montreal'],
                          frequency=24, num_of_days=14,
                          location_label=False,
