@@ -75,7 +75,8 @@ def main():
 
     # Concatenate the old weather data with the missing weather data
     final_weather_df = pd.concat([weather_df, missing_weather_df])
-    final_weather_df = final_weather_df.drop_duplicates()
+    final_weather_df = final_weather_df.drop_duplicates(
+        subset='ds', keep="last")
 
     final_weather_df.to_csv('montrealHourlyWeather.csv', index=False)
 
