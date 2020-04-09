@@ -95,3 +95,7 @@ def main():
                'qc-covid-stats.csv', overwrite=True)
     else:
         print('no new data')
+
+
+if __name__ == "__main__":
+    main()
