@@ -58,6 +58,7 @@ def main():
     import os
     import datetime
 
+    print('loading chrome webdriver')
     chrome_options = webdriver.ChromeOptions()
     chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     chrome_options.add_argument("--headless")
@@ -66,11 +67,14 @@ def main():
     wd = webdriver.Chrome(executable_path=os.environ.get(
         "CHROMEDRIVER_PATH"), chrome_options=chrome_options)
 
+    print('accessing data')
     wd.get("https://www.inspq.qc.ca/covid-19/donnees")
 
     results = wd.find_elements_by_xpath(
         "/html/body/div[2]/div/div[3]/main/div/section/div/div/article/div/div[2]/div/div/div[1]/div")
-    print('Number of results', len(results))
+
+    if len(results) > 0:
+        print('successfully accessed data')
 
     raw_results_list = results[0].text.split('\n')
     total_cases = int(raw_results_list[0].replace(" ", ""))
@@ -80,12 +84,15 @@ def main():
     total_recovered = int(raw_results_list[8].replace(" ", ""))
     under_investigation = int(raw_results_list[10].replace(" ", ""))
 
+    print('quitting webdriver')
     wd.quit()
 
+    print('accessing old data')
     old_data_url = 'https://www.dropbox.com/s/ud7r3l20mzyllvm/qc-covid-stats.csv?dl=1'
     old_df = pd.read_csv(old_data_url)
     old_df['date'] = pd.to_datetime(old_df['date'])
 
+    print('adding new data')
     new_df = old_df.append({'date': pd.to_datetime(datetime.date.today()), 'total_cases': total_cases, 'total_deaths': total_deaths,
                             'hospitalizations': hospitalizations, 'icu': icu, 'total_recovered': total_recovered, 'under_investigation': under_investigation}, ignore_index=True)
     new_df = new_df.set_index('date').drop_duplicates(
