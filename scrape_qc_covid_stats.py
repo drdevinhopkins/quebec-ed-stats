@@ -80,6 +80,8 @@ def main():
     total_recovered = int(raw_results_list[8].replace(" ", ""))
     under_investigation = int(raw_results_list[10].replace(" ", ""))
 
+    wd.quit()
+
     old_data_url = 'https://www.dropbox.com/s/ud7r3l20mzyllvm/qc-covid-stats.csv?dl=1'
     old_df = pd.read_csv(old_data_url)
     old_df['date'] = pd.to_datetime(old_df['date'])
