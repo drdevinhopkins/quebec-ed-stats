@@ -1,4 +1,4 @@
-streamlit==0.51.0
+streamlit==1.37.0
 fbprophet==0.5
 holidays==0.9.12
 plotly==4.4.1
